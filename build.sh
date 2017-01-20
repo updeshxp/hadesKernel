@@ -17,6 +17,9 @@
 
 # DTS packing
 	./tools/dtbTool -v -s 2048 -o ./hK-out/pack/dts ./output/arch/arm/boot/dts/
+#boot.img packing
+	./hK-tools/mkbootimg --kernel ./hK-out/pack/zImage --ramdisk ./hK-tools/ramdisk/SU-FGM_ramdisk.gz --cmdline "console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci" --base 80000000 --pagesize 2048 --kernel_offset 00008000 --ramdisk_offset 02000000 --tags_offset 01e00000 --dt ./hK-out/pack/dts --output ./hK-out/zip/boot.img
+
 
 echo "Done!"
 
