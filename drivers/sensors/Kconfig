@@ -368,15 +368,6 @@ config SENSORS_TMD3782S
 	  This option enables optial sensors using
 	  Sharp TAOS_TMD3782S device driver.
 
-config SENSORS_TMD3782S_VDD_LEDA
-	depends on I2C
-	tristate "SENSORS_TMD3782S_VDD_LEDA"
-	default n
-	help
-	  Say Y here if you use SENSORS_TMD3782S_VDD_LEDA.
-	  This option enables optial sensors using
-	  Sharp SENSORS_TMD3782S_VDD_LEDA device driver.
-
 config CHARGER_NOTIFY_SENSOR
 	tristate "Nofity sensor when charging"
 	default n

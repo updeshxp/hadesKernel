@@ -71,10 +71,9 @@
 
 static struct device *sec_touchkey;
 
-#define FW_VERSION 0xE8
-#define FW_CHECKSUM_H 0x7C
-#define FW_CHECKSUM_L 0xF4
-#define TK_FW_PATH_BIN "abov/abov_tk_a5_swa.fw"
+#define FW_VERSION 0xE
+#define FW_CHECKSUM_H 0x95
+#define FW_CHECKSUM_L 0x98
 
 /* L OS support Screen Pinning concept
   * separate report of recent key and back key
@@ -89,6 +88,7 @@ static struct device *sec_touchkey;
 static void led_twinkle_work(struct work_struct *work);
 #endif
 
+#define TK_FW_PATH_BIN "abov/abov_tk_a5.fw"
 #define TK_FW_PATH_SDCARD "/sdcard/abov_fw.bin"
 
 #define I2C_M_WR 0		/* for i2c */

@@ -127,10 +127,10 @@ int wcnss_xo_auto_detect_enabled(void);
 u32 wcnss_get_wlan_rx_buff_count(void);
 int wcnss_wlan_iris_xo_mode(void);
 
-#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN)
 void wcnss_ldo18_off (void);
 int wcnss_ldo18_on(void);
-#endif /*CONFIG_MACH_A5U_EUR_OPEN || CONFIG_MACH_A5_EUR_OPEN*/
+#endif /*CONFIG_MACH_A5U_EUR_OPEN*/
 void wcnss_flush_work(struct work_struct *work);
 void wcnss_flush_delayed_work(struct delayed_work *dwork);
 int wcnss_get_iris_name(char *iris_version);

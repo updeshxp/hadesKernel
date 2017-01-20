@@ -1735,7 +1735,7 @@ static int wcnss_wlan_suspend(struct device *dev)
 	    penv->smd_channel_ready &&
 	    penv->pm_ops && penv->pm_ops->suspend) 
 	{
-#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN)
 	    wcnss_ldo18_off();
 	    pr_err("wcnss: wcnss_ldo18_off!!\n");
 #endif
@@ -1750,7 +1750,7 @@ static int wcnss_wlan_resume(struct device *dev)
 	    penv->smd_channel_ready &&
 	    penv->pm_ops && penv->pm_ops->resume) 
 	{
-#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN)
 	    wcnss_ldo18_on();
 	    pr_err("wcnss: wcnss_ldo18_on!!\n");
 #endif
@@ -3251,7 +3251,7 @@ static ssize_t wcnss_wlan_write(struct file *fp, const char __user
 		return -EFAULT;
 
 	if ((UINT32_MAX - count < penv->user_cal_rcvd) ||
-	     MAX_CALIBRATED_DATA_SIZE < count + penv->user_cal_rcvd) {
+	     (penv->user_cal_exp_size < count + penv->user_cal_rcvd)) {
 		pr_err(DEVICE " invalid size to write %zu\n", count +
 				penv->user_cal_rcvd);
 		rc = -ENOMEM;

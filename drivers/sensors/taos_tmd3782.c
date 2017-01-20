@@ -35,8 +35,8 @@
 #include <linux/uaccess.h>
 #include <linux/of_gpio.h>
 #include <linux/regulator/consumer.h>
+#include <linux/i2c/taos_tmd3782.h>
 #include <linux/sensor/sensors_core.h>
-#include "taos_tmd3782.h"
 
 /* Note about power vs enable/disable:
  *  The chip has two functions, proximity and ambient light sensing.
@@ -202,7 +202,7 @@ static int tmd3782_leden_gpio_onoff(struct taos_data *info, bool onoff)
 		gpio_set_value(pdata->enable, onoff);
 		pr_info("%s onoff:%d\n", __func__, onoff);
 		if (onoff)
-			usleep_range(20000, 21000);
+			msleep(20);
 	}
 	return 0;
 }
@@ -387,7 +387,7 @@ static void taos_thresh_set(struct taos_data *taos)
 	}
 }
 
-static int taos_chip_on(struct taos_data *taos, bool prox_en)
+static int taos_chip_on(struct taos_data *taos)
 {
 	int ret = 0;
 	u8 temp_val;
@@ -434,20 +434,10 @@ static int taos_chip_on(struct taos_data *taos, bool prox_en)
 	if (ret < 0)
 		gprintk("opt_i2c_write to prox gain reg failed\n");
 
-	/* Enable light sensor separately to avoid running proximity sensor at hardware level.
-	 * Enabling proximity sensor separately at hardware level will lead to erroneous readings.
-	 */
-	if (prox_en == false)
-		reg_cntrl = CNTL_ALS_ONLY_ENBL;
-	else
-		reg_cntrl = CNTL_INTPROXPON_ENBL;
-
+	reg_cntrl = CNTL_INTPROXPON_ENBL;
 	ret = opt_i2c_write(taos, (CMD_REG|CNTRL), &reg_cntrl);
 	if (ret < 0)
 		gprintk("opt_i2c_write to ctrl reg failed\n");
-
-	// Minimum 58 ms delay after initialization before reading data
-	usleep_range(60000, 61000);
 
 	return ret;
 }
@@ -466,7 +456,7 @@ static int taos_chip_off(struct taos_data *taos)
 
 #ifndef CONFIG_SENSORS_TMD3782S_VDD_LEDA
 	tmd3782_leden_gpio_onoff(taos, OFF);
-	usleep_range(20000, 21000);
+	msleep(20);
 #endif
 
 	return ret;
@@ -678,7 +668,8 @@ static ssize_t light_enable_store(struct device *dev,
 		    new_value, (taos->power_state & LIGHT_ENABLED) ? 1 : 0);
 	if (new_value && !(taos->power_state & LIGHT_ENABLED)) {
 		if (!taos->power_state) {
-			taos_chip_on(taos, false);
+			taos_chip_on(taos);
+			msleep(60); /*more than 58 ms*/
 		}
 		taos->power_state |= LIGHT_ENABLED;
 		taos_light_enable(taos);
@@ -699,7 +690,6 @@ static ssize_t proximity_enable_store(struct device *dev,
 	struct taos_data *taos = dev_get_drvdata(dev);
 	bool new_value;
 	int temp = 0, ret = 0;
-	u8 reg_cntrl = 0;
 
 	if (sysfs_streq(buf, "1")) {
 		new_value = true;
@@ -732,21 +722,12 @@ static ssize_t proximity_enable_store(struct device *dev,
 				taos->threshold_high, taos->threshold_low);
 		}
 
-		if (!taos->power_state) {
-			taos_chip_on(taos, true);
-		} else {
-			// Proximity registers are already initialized so enable proximity hardware logic only
-			reg_cntrl = CNTL_INTPROXPON_ENBL;
-			ret = opt_i2c_write(taos, (CMD_REG|CNTRL), &reg_cntrl);
-			if (ret < 0)
-				gprintk("opt_i2c_write to ctrl reg failed during prox enable\n");
-			usleep_range(60000, 61000);
-		}
+		if (!taos->power_state)
+			taos_chip_on(taos);
 
 		taos->power_state |= PROXIMITY_ENABLED;
 		taos->proximity_value = STATE_FAR;
 		taos_thresh_set(taos);
-		usleep_range(10000, 11000);
 
 		/* interrupt clearing */
 		temp = (CMD_REG|CMD_SPL_FN|CMD_PROXALS_INTCLR);
@@ -765,16 +746,8 @@ static ssize_t proximity_enable_store(struct device *dev,
 		disable_irq(taos->irq);
 
 		taos->power_state &= ~PROXIMITY_ENABLED;
-		if (!taos->power_state) {
+		if (!taos->power_state)
 			taos_chip_off(taos);
-		} else {
-			// Light sensor is still running so disable proximity hardware logic only.
-			reg_cntrl = CNTL_ALS_ONLY_ENBL;
-			ret = opt_i2c_write(taos, (CMD_REG|CNTRL), &reg_cntrl);
-			if (ret < 0)
-				gprintk("opt_i2c_write to ctrl reg failed during prox disable\n");
-			usleep_range(60000, 61000);
-		}
 	}
 	mutex_unlock(&taos->power_lock);
 	return size;
@@ -1087,8 +1060,10 @@ static ssize_t proximity_thresh_show(struct device *dev,
 	struct taos_data *taos = dev_get_drvdata(dev);
 	int thresh_hi = 0;
 
+	msleep(20);
 	thresh_hi = taos_proximity_get_threshold(taos, PRX_MAXTHRESHLO);
-	pr_info("%s: THRESHOLD = %d\n", __func__, thresh_hi);
+
+	pr_err("%s: THRESHOLD = %d\n", __func__, thresh_hi);
 
 	return sprintf(buf, "prox_threshold = %d\n", thresh_hi);
 }
@@ -1107,7 +1082,7 @@ static ssize_t proximity_thresh_store(struct device *dev,
 
 	taos->threshold_high = thresh_value;
 	taos_thresh_set(taos);
-	usleep_range(20000, 21000);
+	msleep(20);
 
 	return size;
 }
@@ -1117,10 +1092,11 @@ static ssize_t thresh_high_show(struct device *dev,
 	struct taos_data *taos = dev_get_drvdata(dev);
 	int thresh_hi = 0,thresh_low = 0;
 
+	msleep(20);
 	thresh_low = taos_proximity_get_threshold(taos, PRX_MINTHRESHLO);
 	thresh_hi = taos_proximity_get_threshold(taos, PRX_MAXTHRESHLO);
 
-	pr_info("%s: thresh_hi = %d, thresh_low = %d\n",
+	pr_err("%s: thresh_hi = %d, thresh_low = %d\n",
 		__func__, thresh_hi, thresh_low);
 
 	return sprintf(buf, "%d,%d\n", thresh_hi,thresh_low);
@@ -1140,7 +1116,7 @@ static ssize_t thresh_high_store(struct device *dev,
 
 	taos->threshold_high = thresh_value;
 	taos_thresh_set(taos);
-	usleep_range(20000, 21000);
+	msleep(20);
 	taos->set_manual_thd = true;
 
 	return size;
@@ -1151,10 +1127,11 @@ static ssize_t thresh_low_show(struct device *dev,
 	struct taos_data *taos = dev_get_drvdata(dev);
 	int thresh_hi = 0,thresh_low = 0;
 
+	msleep(20);
 	thresh_hi = taos_proximity_get_threshold(taos, PRX_MAXTHRESHLO);
 	thresh_low = taos_proximity_get_threshold(taos, PRX_MINTHRESHLO);
 
-	pr_info("%s: thresh_hi = %d, thresh_low = %d\n",
+	pr_err("%s: thresh_hi = %d, thresh_low = %d\n",
 		__func__, thresh_hi, thresh_low);
 
 	return sprintf(buf, "%d,%d\n", thresh_hi,thresh_low);
@@ -1174,7 +1151,7 @@ static ssize_t thresh_low_store(struct device *dev,
 
 	taos->threshold_low = thresh_value;
 	taos_thresh_set(taos);
-	usleep_range(20000, 21000);
+	msleep(20);
 	taos->set_manual_thd = true;
 
 	return size;
@@ -1393,7 +1370,7 @@ static void taos_work_func_prox(struct work_struct *work)
 	disable_irq_nosync(taos->irq);
 
 	while (chipid != 0x69 && i < 10) {
-		usleep_range(20000, 21000);
+		msleep(20);
 		ret = opt_i2c_read(taos, CHIPID, &chipid);
 		i++;
 	}
@@ -1838,7 +1815,7 @@ static int taos_i2c_probe(struct i2c_client *client,
 	}
 #ifndef CONFIG_SENSORS_TMD3782S_VDD_LEDA
 	tmd3782_leden_gpio_onoff(taos, OFF);
-	usleep_range(20000, 21000);
+	msleep(20);
 #endif
 	goto done;
 	/* error, unwind it all */
@@ -1899,7 +1876,7 @@ static int taos_resume(struct device *dev)
 	struct taos_data *taos = i2c_get_clientdata(client);
 
 	if (taos->power_state == LIGHT_ENABLED)
-		taos_chip_on(taos, false);
+		taos_chip_on(taos);
 
 	if (taos->power_state & LIGHT_ENABLED)
 		taos_light_enable(taos);

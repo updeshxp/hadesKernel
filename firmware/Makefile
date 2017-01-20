@@ -151,7 +151,6 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_ATMEL_MXT1188S) += tsp_atmel/mXT1664S.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH) += tkey/abov_tk_k5.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A3) += abov/abov_tk_a3.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A5) += abov/abov_tk_a5.fw
-fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A5) += abov/abov_tk_a5_swa.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A8) += abov/abov_tk_a8.fw
 fw-shipped-$(CONFIG_KEYBOARD_ABOV_TOUCH_A7) += abov/abov_tk_a7.fw
 
