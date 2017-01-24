@@ -766,4 +766,12 @@ CONFIG_DEFAULT_IOSCHED="cfq"
 # CONFIG_DEFAULT_ZEN is not set
 # CONFIG_DEFAULT_VR is not set
 CONFIG_FRANDOM=y
+
+#
+# Hotplug
+#
+CONFIG_INTELLI_PLUG=y
+CONFIG_ALUCARD_HOTPLUG=y
+CONFIG_BRICKED_HOTPLUG=y
+CONFIG_MSM_HOTPLUG=y
 ##############################################################################
