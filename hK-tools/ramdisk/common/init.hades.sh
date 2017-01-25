@@ -594,7 +594,7 @@ case "$target" in
                 chmod -h 0660 /sys/class/devfreq/0.qcom,cpubw/max_freq
 				
 				# hadesKernel frequencies
-				echo 100000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+				echo 50000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 				echo 1497600 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 
 				# enable thermal core_control now
@@ -604,12 +604,12 @@ case "$target" in
 
 				echo 0 > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
 				echo 300 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-				echo 400000 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+				echo 200000 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
 				echo 0 > /sys/devices/system/cpu/cpufreq/interactive/align_windows
 				echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
 				echo 20000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
 				echo 80000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-				echo "1 100000:45 200000:30 400000:50 533330:75 800000:75 998400:90 1094400:90 1190400:90 1152000:90 1209600:90 1248000:90 1363200:90 1401600:95" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
+				echo "1 50000:45 100000:45 200000:40 400000:50 533330:75 800000:75 998400:90 1094400:90 1190400:90 1152000:90 1209600:90 1248000:90 1363200:90 1401600:95" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
 				echo 60000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
 				echo "-1" > /sys/devices/system/cpu/cpufreq/interactive/timer_slack
 
