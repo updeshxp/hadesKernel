@@ -1,25 +1,39 @@
-assert(getprop("ro.product.device") == "a5ulte" || getprop("ro.build.product") == "a5ulte" || getprop("ro.product.name") == "a5ulte" ||
-	getprop("ro.product.device") == "a5lte" || getprop("ro.build.product") == "a5lte" || getprop("ro.product.name") == "a5lte" ||
-	getprop("ro.product.device") == "a5ltexx" || getprop("ro.build.product") == "a5ltexx" || getprop("ro.product.name") == "a5ltexx" ||
-	getprop("ro.product.device") == "a5ultexx" || getprop("ro.build.product") == "a5ultexx" || getprop("ro.product.name") == "a5ultexx" ||
-	abort("This package is for \"a5ulte,a5lte,a5ltexx,a5ultexx\" devices; this is a \"" + getprop("ro.product.device") + "\"."););
-show_progress(1.000000, 0);
+set_progress(0.0);
+ui_print(" ");
+set_progress(0.05);
 unmount("/system");
-ui_print(" ");
-ui_print("Welcome to hadesKernel");
-ui_print("v1.4 For -A500x-");
-ui_print(" ");
-ui_print("Extracting boot image...");
-ui_print(" ");
+ui_print("@Installing hadesKernel");
+set_progress(0.1);
 mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system");
-rename("/system/lib/modules/pronto/pronto_wlan.ko", "/system/lib/modules/pronto/pronto_wlan.ko.bkp");
-package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
-package_extract_file("hades", "/system/lib/modules/pronto/pronto_wlan.ko");
-set_perm(0, 0, 0644, "/system/lib/modules/pronto/pronto_wlan.ko");
+package_extract_dir("hades", "/tmp/hades");
+show_progress(0.4, "-900");
+##---- install options
+	  
+    # hadesKernel
+    if
+      file_getprop("/tmp/aroma/hades.prop","kern") == "1"
+    then
+      ui_print("@  Installing kernel");
+	  package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
+      ui_print("@  Patching wifi");
+	  set_perm(0, 0, 0777, "/tmp/hades/wifi.sh");
+	  run_program("/tmp/hades/wifi.sh");
+    endif;
+
+	# SuperSU
+    if
+      file_getprop("/tmp/aroma/hades.prop","su") == "1"
+    then
+      ui_print("@  Rooting the system");
+	  set_perm(0, 0, 0777, "/tmp/hades/supersu.sh");
+	  run_program("/tmp/hades/supersu.sh", "3", "0", "/tmp/hades/SuperSU.zip");
+    endif;
+set_progress(0.98);
+delete_recursive("/tmp");
+set_progress(1.0);
+ui_print("@  Unmounting System ...");
 unmount("/system");
-package_extract_file("SuperSU.zip", "/tmp/SuperSU.zip");
-run_program("/sbin/busybox", "unzip", "/tmp/SuperSU.zip", "META-INF/com/google/android/*", "-d", "/tmp");
-run_program("/sbin/busybox", "sh", "/tmp/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/SuperSU.zip");
-set_progress(1.000000);
-ui_print("Done. Reboot and enjoy!");
-ui_print("");
+#-- Finish
+ui_print(" ");
+ui_print("@Done");
+set_progress(1);
