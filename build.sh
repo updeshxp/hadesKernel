@@ -56,7 +56,7 @@ cp -r $(pwd)/hK-tools/META-INF $(pwd)/hK-out/zip/
 cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades
 cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/SuperSU.zip
 cd hK-out/zip
-zip -r -9 - * > ../"A500F_hadesKernel-$(cat ../../.scmversion).zip"
+zip -r -9 - * > ../"A500F$(cat ../../.scmversion).zip"
 cd ../../
 
 echo "Done!"

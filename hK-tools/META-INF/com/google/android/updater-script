@@ -7,7 +7,7 @@ show_progress(1.000000, 0);
 unmount("/system");
 ui_print(" ");
 ui_print("Welcome to hadesKernel");
-ui_print("v1.4 For -A500x-");
+ui_print("v1.5 For -A500x-");
 ui_print(" ");
 ui_print("Extracting boot image...");
 ui_print(" ");
