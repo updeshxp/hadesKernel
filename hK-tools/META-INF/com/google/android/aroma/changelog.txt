@@ -1,0 +1,55 @@
+<b><#selectbg_g>v2.0 - 25.01.2017</#></b>
+<*>J500HXXU2BPK4 update - December security patches</*>
+<*>Add support for A500H/A500S versions</*>
+<*>Add builtin wlan module</*>
+<*>Add westwood tcp and make cubic default again</*>
+<*>Adreno Idler 1.1, fixed msm_adreno_tz</*>
+<*>Add powersuspend</*>
+<*>More msm-thermal tweaks</*>
+<*>kernel: reduce overheat</*>
+<*>Enable multi-core power savings</*>
+<*>Add SuperSU SR5 back</*>
+<*>Fix Deepsleep for F/G/M</*>
+<*>Add 50Mhz and 100Mhz frequencies for low consumption when awake (AOD)</*>
+<*>Add dynamic sync 2.0</*>
+<*>Add lcd notify</*>
+<*>xz: Optimize Sfck Compression</*>
+<*>Added Aroma Installer</*>
+
+<b><#selectbg_g>v1.4 - 22.12.2016</#></b>
+<*>Fixed wifi again for each version</*>
+<*>Multitask and battery optimisations + permissive mode enabled</*>
+<*>Fix for frequencies not sticking at boot</*>
+<*>ramdisk cpu / io / battery tune-ups</*>
+<*>Add specific ramdisk for each supported variants</*>
+<*>Separate SU from ramdisk</*>
+<*>Fixed Kcal (color calibration)</*>
+
+<b><#selectbg_g>v1.3 - 15.12.2016</#></b>
+<*>add KCAL driver</*>
+<*>sysctl: favor filesystem</*>
+<*>GPU OC to 720Mhz</*>
+<*>Reverted CPU OC to 1.5Ghz</*>
+<*>Fixed wifi for A500G</*>
+
+<b><#selectbg_g>v1.2 - 11.11.2016</#></b>
+<*>A500FU SuperSU SR3 patch + init.d support</*>
+<*>SuperSU SR3 patch + init.d support</*>
+<*>Experimental wifi fix</*>
+<*>A500FU support</*>
+<*>Switch to CUBIC TCP congestion control</*>
+<*>tty: fix memleak in alloc_pid</*>
+<*>arch/arm : compile with hardfloat + neon-vfpv4"</*>
+<*>Tune-up for Cortex A53/ARMv8 architecture</*>
+
+<b><#selectbg_g>v1.0 - 08.11.2016 - initial release</#></b>
+<*>A500GXXU1CPH4 update</*>
+<*>OTG and permissive enabling</*>
+<*>free-mem optimisations</*>
+<*>disable notifications on usb connect</*>
+<*>added SU patched ramdisk</*>
+<*>Update build.sh</*>
+<*>2.07Ghz CPU OC</*>
+<*>Enable neon and VFPv3</*>
+<*>-o3 and Linaro GCC 4.9.4</*>
+<*>enable xz compression</*>

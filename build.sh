@@ -7,7 +7,7 @@
 #The build 
 	export ARCH=arm
 	export CROSS_COMPILE=$(pwd)/hK-tools/arm-eabi-4.8/bin/arm-eabi-
-	mkdir -p output hK-out/pack/rd hK-out/zip
+	mkdir -p output hK-out/pack/rd hK-out/zip/hades
 
 	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 	make -j64 -C $(pwd) O=output
@@ -55,8 +55,9 @@ echo -n "SEANDROIDENFORCE" >> $(pwd)/hK-out/zip/boot.img
 
 #Auto made zips for F only - now
 cp -r $(pwd)/hK-tools/META-INF $(pwd)/hK-out/zip/
-cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades
-cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/SuperSU.zip
+cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades/hades
+cp -r $(pwd)/hK-tools/scripts/* $(pwd)/hK-out/zip/hades/
+cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/hades/SuperSU.zip
 cd hK-out/zip
 zip -r -9 - * > ../"A500F$(cat ../../.scmversion).zip"
 cd ../../
