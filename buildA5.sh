@@ -9,7 +9,7 @@
 	export CROSS_COMPILE=$(pwd)/hK-tools/arm-eabi-4.8/bin/arm-eabi-
 	mkdir -p output hK-out/pack/rd hK-out/zip/hades
 
-	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
+	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 	make -j64 -C $(pwd) O=output
 
 # zImage copying - assuming the zimage is built
@@ -21,7 +21,7 @@
 #Ramdisk packing
 	echo "Building ramdisk structure..."
 	cp -r hK-tools/ramdisk/common/* hK-out/pack/rd
-	cp -r hK-tools/ramdisk/F/* hK-out/pack/rd
+	cp -r hK-tools/ramdisk/A5F/* hK-out/pack/rd
 	cd $(pwd)/hK-out/pack/rd
 	mkdir -p data dev oem proc sys system
 	echo "Setting ramdisk file permissions..."
@@ -55,6 +55,7 @@ echo -n "SEANDROIDENFORCE" >> $(pwd)/hK-out/zip/boot.img
 
 #Auto made zips for F only - now
 cp -r $(pwd)/hK-tools/META-INF $(pwd)/hK-out/zip/
+sed -i 's/A500xx/A500F/g' $(pwd)/hK-out/zip/META-INF/com/google/android/aroma-config
 cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades/hades
 cp -r $(pwd)/hK-tools/scripts/* $(pwd)/hK-out/zip/hades/
 cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/hades/SuperSU.zip
