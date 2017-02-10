@@ -55,6 +55,7 @@ echo ""
 cp -r $(pwd)/hK-tools/META-INF $(pwd)/hK-out/zip/
 sed -i 's/A500xx/A500F/g' $(pwd)/hK-out/zip/META-INF/com/google/android/aroma-config
 cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades/hades
+cp -r $(pwd)/output/drivers/media/radio/radio-iris-transport.ko $(pwd)/hK-out/zip/hades/radio
 cp -r $(pwd)/hK-tools/scripts/* $(pwd)/hK-out/zip/hades/
 cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/hades/SuperSU.zip
 cd hK-out/zip
