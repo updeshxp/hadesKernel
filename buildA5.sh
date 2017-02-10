@@ -7,7 +7,7 @@
 #The build 
 	export ARCH=arm
 	export CROSS_COMPILE=$(pwd)/hK-tools/arm-eabi-4.8/bin/arm-eabi-
-	mkdir -p output hK-out/pack/rd hK-out/zip/hades
+	mkdir -p output hK-out/pack/rd hK-out/zip/hades hK-zip
 
 	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 	make -j64 -C $(pwd) O=output
@@ -61,7 +61,7 @@ cp -r $(pwd)/output/drivers/media/radio/radio-iris-transport.ko $(pwd)/hK-out/zi
 cp -r $(pwd)/hK-tools/scripts/* $(pwd)/hK-out/zip/hades/
 cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/hades/SuperSU.zip
 cd hK-out/zip
-zip -r -9 - * > ../"A500F$(cat ../../.scmversion).zip"
+zip -r -9 - * > ../../hK-zip/"A500F$(cat ../../.scmversion).zip"
 cd ../../
 
 echo "Done!"
