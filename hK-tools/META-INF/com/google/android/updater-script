@@ -15,9 +15,9 @@ show_progress(0.4, "-900");
     then
       ui_print("@  Installing kernel");
 	  package_extract_file("boot.img", "/dev/block/bootdevice/by-name/boot");
-      ui_print("@  Patching wifi");
-	  set_perm(0, 0, 0777, "/tmp/hades/wifi.sh");
-	  run_program("/tmp/hades/wifi.sh");
+      ui_print("@  Patching modules");
+	  set_perm(0, 0, 0777, "/tmp/hades/modules.sh");
+	  run_program("/tmp/hades/modules.sh");
     endif;
 
 	# SuperSU
