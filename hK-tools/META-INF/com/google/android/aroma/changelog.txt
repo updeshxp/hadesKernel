@@ -1,3 +1,11 @@
+<b><#selectbg_g>v2.1 - 10.02.2017</#></b>
+<*>Fix FM Radio</*>
+<*>Fix OTG for all versions</*>
+<*>Fix overheating issues for G</*>
+<*>Add support for A3FU</*>
+<*>Add SuperSU-v2.79-SR3 (latest)</*>
+
+
 <b><#selectbg_g>v2.0 - 25.01.2017</#></b>
 <*>J500HXXU2BPK4 update - December security patches</*>
 <*>Add support for A500H/A500S versions</*>

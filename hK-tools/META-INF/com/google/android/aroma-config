@@ -12,10 +12,10 @@
 # Initializing Rom Information
 #
 ini_set("rom_name",             "hadesKernel");
-ini_set("rom_version",          "v2.0");
+ini_set("rom_version",          "v2.1");
 ini_set("rom_author",           "corsicanu@xda");
 ini_set("rom_device",           "A500xx");
-ini_set("rom_date",             "25 January 2017");
+ini_set("rom_date",             "10 February 2017");
 ##
 # Show Animated Splash
 #
