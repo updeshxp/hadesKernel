@@ -10,7 +10,7 @@
 	mkdir -p output hK-out/pack/rd hK-out/zip/hades hK-zip
 
 	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
-	make -j64 -C $(pwd) O=output
+	make -j128 -C $(pwd) O=output
 
 # zImage copying - assuming the zimage is built
 	cp output/arch/arm/boot/zImage $(pwd)/hK-out/pack/zImage
