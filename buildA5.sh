@@ -9,7 +9,7 @@
 	export CROSS_COMPILE=$(pwd)/hK-tools/arm-eabi-4.8/bin/arm-eabi-
 	mkdir -p output hK-out/pack/rd hK-out/zip/hades hK-zip
 
-	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
+	make -C $(pwd) O=output msm8916_sec_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 	make -j128 -C $(pwd) O=output
 
 # zImage copying - assuming the zimage is built
