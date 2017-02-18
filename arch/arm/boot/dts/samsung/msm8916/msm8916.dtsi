@@ -361,7 +361,7 @@
 		compatible = "qcom,clock-a53-8916";
 		reg = <0x0b011050 0x8>;
 		reg-names = "rcg-base";
-		qcom,safe-freq = < 400000000 >;
+		qcom,safe-freq = < 200000000 >;
 		cpu-vdd-supply = <&apc_vreg_corner>;
 		clocks = <&clock_gcc clk_gpll0_ao_clk_src>,
 			 <&clock_gcc clk_a53sspll>;
