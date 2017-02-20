@@ -1,10 +1,27 @@
+<b><#selectbg_g>v2.2 - 20.02.2017</#></b>
+<*>add support for J5 2015 (J500xx)</*>
+<*>add usb fast charge</*>
+<*>make cubic tcp default for better net speeds</*>
+<*>disable software CRC for better performance</*>
+<*>optimize framebuffer for better performance</*>
+<*>add regulator for overclock</*>
+<*>undervolt for better battery</*>
+<*>lower safe frequency from 400 to 200mhz</*>
+<*>A5S deepsleep fix</*>
+<*>add nvidia relaxation patch for better battery</*>
+<*>enhance power efficiency</*>
+<*>implement fast idling of CPU</*>
+<*>add intelli_thermal for better temp handling</*>
+<*>reduce high-load and average-load for better battery</*>
+<*>enable arch_power</*>
+<*>lower throttle threeshold and enable it by default</*>
+
 <b><#selectbg_g>v2.1 - 10.02.2017</#></b>
 <*>Fix FM Radio</*>
 <*>Fix OTG for all versions</*>
 <*>Fix overheating issues for G</*>
 <*>Add support for A3FU</*>
 <*>Add SuperSU-v2.79-SR3 (latest)</*>
-
 
 <b><#selectbg_g>v2.0 - 25.01.2017</#></b>
 <*>J500HXXU2BPK4 update - December security patches</*>
