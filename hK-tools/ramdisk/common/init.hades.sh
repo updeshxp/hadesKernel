@@ -617,8 +617,8 @@ case "$target" in
 				echo 40 > /sys/class/kgsl/kgsl-3d0/idle_timer
 
 				# Other tune-ups
+				echo "Y" > /sys/module/msm_thermal/parameters/enabled
 				echo "cubic" > /proc/sys/net/ipv4/tcp_congestion_control
-				echo "westwood" > /proc/sys/net/ipv4/tcp_congestion_control
 				echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 				echo 53059 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
 				echo "14538,19384,24230,29076,33922,43614" > /sys/module/lowmemorykiller/parameters/minfree
