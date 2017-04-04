@@ -1,6 +1,4 @@
 #!/sbin/sh
-	cp /tmp/hades/msm_core_ctl.ko /system/lib/modules/msm_core_ctl.ko
-	chmod 644 /system/lib/modules/msm_core_ctl.ko
 if [ -f /system/lib/modules/pronto/pronto_wlan.ko.bkp ]; 
   then
 	cp /tmp/hades/hades /system/lib/modules/pronto/pronto_wlan.ko

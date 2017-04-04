@@ -630,11 +630,6 @@ case "$target" in
 				chmod 644 /sys/module/lowmemorykiller/parameters/debug_level
 				echo "0" > /sys/module/lowmemorykiller/parameters/debug_level
 				fi
-				
-				#Core Control related
-				insmod /system/lib/modules/msm_core_ctl.ko
-                echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
-                echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
 
 				# Permissive
 				setenforce 0
