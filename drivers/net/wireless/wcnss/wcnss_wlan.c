@@ -1735,7 +1735,7 @@ static int wcnss_wlan_suspend(struct device *dev)
 	    penv->smd_channel_ready &&
 	    penv->pm_ops && penv->pm_ops->suspend) 
 	{
-#if defined(CONFIG_MACH_A5U_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
 	    wcnss_ldo18_off();
 	    pr_err("wcnss: wcnss_ldo18_off!!\n");
 #endif
@@ -1750,7 +1750,7 @@ static int wcnss_wlan_resume(struct device *dev)
 	    penv->smd_channel_ready &&
 	    penv->pm_ops && penv->pm_ops->resume) 
 	{
-#if defined(CONFIG_MACH_A5U_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
 	    wcnss_ldo18_on();
 	    pr_err("wcnss: wcnss_ldo18_on!!\n");
 #endif

@@ -669,7 +669,7 @@ fail:
 
 }
 
-#if defined(CONFIG_MACH_A5U_EUR_OPEN)
+#if defined(CONFIG_MACH_A5U_EUR_OPEN) || defined(CONFIG_MACH_A5_EUR_OPEN)
 static struct vregs_info pronto_ldo18_info =
 {"qcom,pronto-ldo18",  VREG_NULL_CONFIG, 2700000, 0,
 	2700000, 10000,  NULL};
@@ -783,7 +783,7 @@ fail:
 }
 EXPORT_SYMBOL(wcnss_ldo18_on);
 
-#endif  /* CONFIG_MACH_A5U_EUR_OPEN */
+#endif  /* CONFIG_MACH_A5U_EUR_OPEN || CONFIG_MACH_A5_EUR_OPEN*/
 static void wcnss_iris_vregs_off(enum wcnss_hw_type hw_type,
 					struct wcnss_wlan_config *cfg)
 {
