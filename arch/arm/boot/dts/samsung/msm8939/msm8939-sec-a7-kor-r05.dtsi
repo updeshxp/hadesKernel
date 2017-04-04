@@ -244,6 +244,7 @@
 			interrupt-parent = <&msm_gpio>;
 			interrupts = <113 0>;
 			reg_vio-supply = <&pm8916_l5>;
+			reg_vdd-supply = <&pm8916_l17>;
 			taos,irq_gpio = <&msm_gpio 113 0x1>;
 			taos,en = <&msm_gpio 72 0x1>;
 			taos,prox_rawdata_trim = <170>;
@@ -718,3 +719,11 @@
 	qcom,cpr-apc-volt-step = <12500>;
 	qcom,cpr-up-threshold = <2>;
 };
+
+&pm8916_l17 {
+	regulator-min-microvolt = <2850000>;
+	regulator-max-microvolt = <2850000>;
+	qcom,init-voltage = <2850000>;
+	status = "okay";
+};
+

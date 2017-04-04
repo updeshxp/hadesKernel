@@ -1059,7 +1059,17 @@ int32_t s5k4ecgx_sensor_config(struct msm_sensor_ctrl_t *s_ctrl,
                     msleep(380);
                     s5k4ecgx_check_ae_stable(s_ctrl);
                 }
-                S5K4ECGX_WRITE_LIST(s5k4ecgx_fps_30);
+                switch (s5k4ecgx_ctrl.fixed_fps_val)
+                {
+                    case 15000:
+                        S5K4ECGX_WRITE_LIST(s5k4ecgx_fps_15);
+                        break;
+                    case 30000:
+                        S5K4ECGX_WRITE_LIST(s5k4ecgx_fps_30);
+                        break;
+                    default:
+                        S5K4ECGX_WRITE_LIST(s5k4ecgx_fps_auto);
+                }
                 S5K4ECGX_WRITE_LIST_BURST(s5k4ecgx_camcorder);
                 s5k4ecgx_set_exposure_camcorder(s_ctrl,s5k4ecgx_ctrl.settings.exposure);
 

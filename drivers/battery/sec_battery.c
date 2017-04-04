@@ -1087,14 +1087,6 @@ static void sec_bat_swelling_check(struct sec_battery_info *battery, int tempera
 			(temperature <= battery->swelling_temp_low_threshold)) &&
 			battery->pdata->temp_check_type) {
 
-			if (temperature >= battery->swelling_temp_high_threshold &&
-				battery->pdata->event_check &&
-				!battery->event) {
-				pr_info("%s: skip check swelling in high temperature event mode(%d)\n",
-						__func__, battery->event);
-				return;
-			}
-
 			pr_info("%s: swelling mode start. stop charging\n", __func__);
 			battery->swelling_mode = true;
 			battery->swelling_full_check_cnt = 0;
