@@ -617,6 +617,12 @@ case "$target" in
 				echo 40 > /sys/class/kgsl/kgsl-3d0/idle_timer
 
 				# Other tune-ups
+				echo "fiops" > /sys/block/mmcblk0/queue/scheduler
+				echo "fiops" > /sys/block/mmcblk1/queue/scheduler
+				echo 512 > /sys/block/mmcblk0/queue/read_ahead_kb
+				echo 1024 > /sys/block/mmcblk1/queue/read_ahead_kb
+				#echo 0 > /sys/module/msm_hotplug/msm_enabled
+				#echo 1 > /sys/module/intelli_plug/parameters/intelli_plug_active
 				echo "Y" > /sys/module/msm_thermal/parameters/enabled
 				echo "cubic" > /proc/sys/net/ipv4/tcp_congestion_control
 				echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
@@ -634,7 +640,7 @@ case "$target" in
 				# Permissive
 				setenforce 0
 
-				# Magisk Stuff to reset knox and fix safetynet :)
+				# Magisk stolen Stuff (:
 				/sbin/resetprop -n ro.boot.warranty_bit "0"
 				/sbin/resetprop -n ro.warranty_bit "0"
 				/sbin/resetprop -n ro.boot.veritymode "enforcing"
