@@ -634,6 +634,15 @@ case "$target" in
 				# Permissive
 				setenforce 0
 
+				# Magisk Stuff to reset knox and fix safetynet :)
+				/sbin/resetprop -n ro.boot.warranty_bit "0"
+				/sbin/resetprop -n ro.warranty_bit "0"
+				/sbin/resetprop -n ro.boot.veritymode "enforcing"
+				/sbin/resetprop -n ro.boot.verifiedbootstate "green"
+				/sbin/resetprop -n ro.boot.flash.locked "1"
+				/sbin/resetprop -n ro.boot.ddrinfo "00000001"
+				/sbin/resetprop -n ro.crypto.state "encrypted"
+
 				# Init.d support
 				mount -o remount,rw /system
 				if [ ! -d /system/etc/init.d ]; then
