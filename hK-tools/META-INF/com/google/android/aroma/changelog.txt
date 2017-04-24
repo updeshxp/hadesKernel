@@ -1,6 +1,8 @@
 <b><#selectbg_g>v2.4 - 24.04.2017</#></b>
 <*>updated ramdisk to latest official fw</*>
 <*>added root options in Aroma</*>
+<*>added Magisk as root option</*>
+<*>removed charging limit for some devices</*>
 <*>reworked knox 0x0 script</*>
 <*>revert update to linux 3.10.60 for now</*>
 <*>revert add more governors for now</*>
