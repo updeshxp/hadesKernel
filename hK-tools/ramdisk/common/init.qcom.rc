@@ -829,9 +829,12 @@ service qcom-sh /system/bin/sh /init.qcom.sh
     user root
     oneshot
 
-#replace post-boot.sh with internal sh for better handling of cpu tunables
-#service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
-service hades-post-boot /system/bin/sh /init.hades.sh
+service knox-faker /system/bin/sh /sbin/knox.sh
+    class late_start
+    user root
+    oneshot
+
+service hades-boot /system/bin/sh /init.hades.sh
     class late_start
     user root
     disabled
@@ -851,7 +854,8 @@ service atfwd /system/bin/ATFWD-daemon
     group system radio
 
 on property:sys.boot_completed=1
-    start hades-post-boot
+    start knox-faker
+    start hades-boot
     start qti-testscripts
 
 service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf

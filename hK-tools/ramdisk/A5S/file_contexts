@@ -345,6 +345,14 @@
 /sbin/rdsh                                  u:object_r:rd_shell_exec:s0
 /sbin/init\.wireless-dn\.sh                 u:object_r:wiress_dn_sh_exec:s0
 
+
+
+/system/bin/wsmd            u:object_r:wsmd_exec:s0
+/dev/socket/wsm_socket(/.*)?	    u:object_r:wsm_socket:s0
+
+# board/Request/view/21158912/?page=1
+/system/bin/eprosed            u:object_r:eprosed_exec:s0
+
 #line 1 "vendor/samsung/common/sepolicy/BSP/bsp_qcom_v2/bsp/common/file_contexts"
 ###################################
 # Dev nodes
@@ -2096,6 +2104,9 @@
 
 /system/lib(/.*)?	u:object_r:system_library_file:s0
 
+# SEA_site_M_OS#113
+/system/bin/TigerService           u:object_r:tigerservice_exec:s0
+
 ############################# 
 # System files of knox_common
 # 
@@ -2206,6 +2217,7 @@
 /data/misc/jack(/.*)?		u:object_r:jack_data_file:s0
 /data/misc/multimedia(/.*)?                           u:object_r:mediaserver_data_file:s0
 /data/misc/radio(/.*)?	u:object_r:radio_data_file:s0
+/data/misc/\.tiger(/.*)?		u:object_r:tiger_data_file:s0
 /data/misc/tima(/.*)?		u:object_r:tima_log:s0
 /data/misc/tima_keystore(/.*)?		u:object_r:tima_keystore_file:s0
 /data/misc/tz_esecomm(/.*)?		u:object_r:tima_keystore_file:s0

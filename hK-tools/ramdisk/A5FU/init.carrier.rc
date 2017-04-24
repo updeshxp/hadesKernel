@@ -42,6 +42,9 @@ on boot
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
 
+# SSWAP
+    write /proc/sys/vm/swappiness 130
+
 on fs
 
 # Support Preload install apks
@@ -84,3 +87,11 @@ on property:persist.sys.storage_preload=1
  
 on property:persist.sys.storage_preload=0 
     start umount_service 
+
+# SSWAP
+service swapon /sbin/sswap -s
+    class core
+    user root
+    group root
+    seclabel u:r:sswap:s0
+    oneshot

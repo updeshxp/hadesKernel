@@ -24,4 +24,3 @@ debug.atrace.tags.enableflags=0
 camera2.portability.force_api=1
 persist.sys.usb.config=mtp
 ro.securestorage.support=false
-ro.config.knox=0

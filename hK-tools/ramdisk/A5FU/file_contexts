@@ -340,6 +340,11 @@
 #
 /dev/ftt_ctrl                                         u:object_r:ftt_ctrl_device:s0
 
+
+### /sbin
+/sbin/rdsh                                  u:object_r:rd_shell_exec:s0
+/sbin/init\.wireless-dn\.sh                 u:object_r:wiress_dn_sh_exec:s0
+
 #line 1 "vendor/samsung/common/sepolicy/BSP/bsp_qcom_v2/bsp/common/file_contexts"
 ###################################
 # Dev nodes
@@ -919,6 +924,8 @@
 /dev/iq_mem             u:object_r:slog_device:s0
 #SEC remove: /dev/ttyGS[0-9]         u:object_r:serial_device:s0
 /dev/stty_w0            u:object_r:tty_device:s0
+# SEA_site_M_OS#104
+/dev/stty_w12           u:object_r:tty_device:s0
 /dev/stty_w[0-9]*       u:object_r:radio_device:s0
 /dev/vser               u:object_r:serial_device:s0
 
@@ -1200,6 +1207,7 @@
 /dev/bcm2079x	u:object_r:nfc_device:s0
 /dev/bus/usb(/.*)?      u:object_r:usb_bus_device:s0
 /dev/cdma_.*		u:object_r:radio_device:s0
+/dev/context		u:object_r:context_device:s0
 # conflict with Qcom BSP, /dev/diag	u:object_r:diag_device:s0
 /dev/esfp[0-9]          u:object_r:fp_sensor_device:s0
 /dev/gnss_ipc                                         u:object_r:gps_device:s0
@@ -1247,12 +1255,16 @@
 /dev/socket/tz                  u:object_r:tz_socket:s0
 /dev/socket/uibc(/.*)?          u:object_r:uibc_socket:s0
 /dev/socket/vpnclientd          u:object_r:vpnclientd_socket:s0
+/dev/socket/vaultkeeper(/.*)?   u:object_r:vaultkeeper_socket:s0
 /dev/sound_trigger_boost        u:object_r:audio_device:s0
 /dev/ssp_sensorhub	u:object_r:input_device:s0
 /dev/ssp_data_injection	u:object_r:input_device:s0
 /dev/timerirq	u:object_r:timerirq_device:s0
 /dev/ttyGS[0-9]*	u:object_r:usb_serial_device:s0
 /dev/ttyUSB[0-9]*	u:object_r:usb_device:s0
+# SEA_site_M#92; requested by jh21.hwang
+# the B2B client requests some specific path range such as /dev/ttyUSB0 ~ /dev/ttyUSB30, /dev/ttyACM0 ~ /dev/ttyACM30
+/dev/ttyACM[0-9]*	u:object_r:usb_device:s0
 /dev/t-base-tui                    u:object_r:tui_device:s0
 /dev/tuihw	u:object_r:tz_device:s0
 /dev/tzdev	u:object_r:tz_device:s0
@@ -1441,8 +1453,11 @@
 /sys/class/dsm/maxdsm_cal(/.*)?                --     u:object_r:sysfs_ss_writable:s0
 /sys/class/earsmart/control/always_stream_fs_on       u:object_r:sysfs_ss_writable:s0
 /sys/class/host_notify(/.*)?                   --     u:object_r:sysfs_ss_writable:s0   
-/sys/class/leds/led_[1-4](/.*)?                --     u:object_r:sysfs_led_writable:s0   
-/sys/class/timed_output/vibrator/enable               u:object_r:sysfs_ss_writable:s0   
+/sys/class/leds/led_[1-4](/.*)?                --     u:object_r:sysfs_led_writable:s0
+
+# P160624-04026 / TG change vibrator working when doing dumpstate / proctitle=system/bin/dumpstate -s
+# avc:  denied  { write } for  pid=5987 comm="dumpstate" name="vibrator" dev="sysfs" ino=28485 scontext=u:r:dumpstate:s0 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=0 SEPF_SECMOBILE_6.0.1_0013
+/sys/class/timed_output/vibrator(/.*)?         --     u:object_r:sysfs_ss_writable:s0   
 /sys/class/ultrasonic/ultrasonic/data                 u:object_r:sysfs_ss_writable:s0 
 /sys/class/usb/otg/test                               u:object_r:sysfs_ss_writable:s0
 /sys/devices/14ac0000\.mali/power_policy               u:object_r:sysfs_ss_writable:s0
@@ -1507,6 +1522,7 @@
 /system/bin/icd	u:object_r:icd_exec:s0
 /system/bin/insthk	u:object_r:insthk_exec:s0
 /system/bin/imsd	u:object_r:imsd_exec:s0
+/system/bin/iod	u:object_r:iod_exec:s0
 /system/bin/ipruleset	u:object_r:ipruleset_exec:s0
 /system/bin/IPSecService	u:object_r:IPSecService_exec:s0
 /system/bin/irisd	u:object_r:irisd_exec:s0
@@ -1553,6 +1569,7 @@
 /system/bin/vcsFPService	u:object_r:vcsFPService_exec:s0
 /system/bin/vfmService		u:object_r:vcsFPService_exec:s0
 /system/bin/vpnclientd          u:object_r:vpnclientd_exec:s0
+/system/bin/vaultkeeperd	u:object_r:vaultkeeperd_exec:s0
 # conflict with Qcom BSP, /system/bin/wcnss_service	u:object_r:wcnss_service_exec:s0
 /system/bin/wldu                                u:object_r:wldu_exec:s0
 /system/bin/wpa_supplicant_real u:object_r:wpa_exec:s0
@@ -1673,6 +1690,7 @@
 /data/fota(/.*)?		                      u:object_r:fota_data_file:s0
 /data/fpSnrTest(/.*)?		                      u:object_r:shared_data_file:s0
 /data/KEqvTaYEYkuJr1Mn+t-SwFvbgYo_(/.*)?  u:object_r:tima_keystore_file:s0
+/data/knox_tima(/.*)?				u:object_r:tima_keystore_file:s0
 /data/log(/.*)?	u:object_r:dumplog_data_file:s0
 /data/media\.tmp(/.*)?	u:object_r:media_rw_data_file:s0
 /data/media/obb(/.*)?	u:object_r:obb_apk_file:s0
@@ -1803,6 +1821,7 @@
 /cpefs(/.*)?                                     u:object_r:sec_efs_file:s0
 # Add labelling code for /efs/apn-changes.xml it using only for M upgrade model & first released version is Kitkat. ( From L OS using /efs/sec_efs/apn-changes.xml)
 /efs/apn-changes\.xml                            u:object_r:sec_efs_file:s0
+/efs/Battery(/.*)?                               u:object_r:battery_efs_file:s0
 /efs/bluetooth(/.*)?	u:object_r:bluetooth_efs_file:s0
 /efs/carrier(/.*)?	u:object_r:carrier_efs_file:s0
 /efs/cirrus(/.*)?                                u:object_r:sec_efs_file:s0
@@ -1830,6 +1849,7 @@
 /efs/SMS(/.*)?                                   u:object_r:sec_efs_file:s0
 /efs/SlideCount                                  u:object_r:app_efs_file:s0
 /efs/TEE(/.*)?                                   u:object_r:prov_efs_file:s0
+/efs/vk(/.*)?                                   u:object_r:vaultkeeper_efs_file:s0
 /efs/wifi(/.*)?	u:object_r:wifi_efs_file:s0
 /efs_gsm(/.*)?            u:object_r:efs_gsm_file:s0
 
@@ -1893,6 +1913,9 @@
 # OMC_v3(Open Mobile Customization)
 /omr(/.*)?	u:object_r:omr_file:s0
 
+# SEA_site_M_OS#79: same purpose with carrier partition
+/vzw(/.*)?	u:object_r:carrier_file:s0
+
 #############################
 # PROC INFO / LOCK FILE
 # for preventing migration issue, this files were created by type_transition rules.
@@ -1900,6 +1923,26 @@
 /data/local/olsrd\.lock                              u:object_r:proc_info_file:s0
 /data/ss_conn_daemon\.pid                              u:object_r:proc_info_file:s0
 /data/\.cid\.info                                      u:object_r:proc_info_file:s0
+
+## SEA_site_M OS#23
+/dev/mx_0_m4_gdb                                      u:object_r:mx_debug_device:s0
+/dev/mx_0_r4_gdb                                      u:object_r:mx_debug_device:s0
+/dev/mx_0_mmap                                        u:object_r:mx_debug_device:s0
+/dev/mx_0_debug_sampler                               u:object_r:mx_debug_device:s0
+/dev/mx_client_test_0                                 u:object_r:mx_debug_device:s0
+/dev/s5n2560udi0                                      u:object_r:wifi_control_device:s0
+
+/system/bin/moredump                                  u:object_r:moredump_exec:s0
+/system/bin/mx_logger_dump\.sh                         u:object_r:moredump_exec:s0
+
+/sys/module/scsc_bt/parameters(/.*)?         --       u:object_r:sysfs_wlandut_writable:s0
+/sys/module/scsc_logring/parameters(/.*)?    --       u:object_r:sysfs_wlandut_writable:s0
+/sys/module/scsc_mx/parameters(/.*)?         --       u:object_r:sysfs_wlandut_writable:s0
+/sys/module/scsc_wlan/parameters(/.*)?       --       u:object_r:sysfs_wlandut_writable:s0
+## End of SEA_site_M OS#23
+
+
+
 #line 1 "vendor/samsung/common/sepolicy/carrier/carrier_spr/file_contexts"
 #### Kineto for secsprextension/java/com/oem/smartwifisupport
 /dev/socket/cfiat  u:object_r:cfiat_socket:s0
@@ -1922,6 +1965,7 @@
 #line 1 "vendor/samsung/common/sepolicy/carrier/carrier_kor/file_contexts"
 /system/bin/dmbserver   u:object_r:dmb_exec:s0
 /dev/tdmb               u:object_r:tdmb_device:s0
+/data/\.dmbca(/.*)?   u:object_r:dmb_data_file:s0
 /data/playready(/.*)?   u:object_r:playready_file:s0
 
 

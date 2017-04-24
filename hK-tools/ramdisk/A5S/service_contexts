@@ -253,6 +253,8 @@ bio.BAuthService                            u:object_r:bauthserver_service:s0
 TvoutService_C                              u:object_r:bintvoutservice_service:s0
 com.samsung.android.jam.IAndroidShm         u:object_r:jackservice_service:s0
 com.samsung.android.jam.IJackService        u:object_r:jackservice_service:s0
+# SEA_site_M_OS#113, tigerservice
+com.samsung.srk.tigerkeystoreprovider.ITigerService               u:object_r:tigerservice_service:s0
 media.mediacapture                          u:object_r:mediaserver_service:s0
 media.transcoder                            u:object_r:mediaserver_service:s0
 com.broadcom.nfc.Factory                    u:object_r:nfc_service:s0
@@ -330,6 +332,8 @@ firewall                                    u:object_r:system_service:s0
 gamemanager                                 u:object_r:system_service:s0
 harmony_eas_service                         u:object_r:system_service:s0
 healthcover                                 u:object_r:system_service:s0
+# SEA_site M OS#137
+HqmManagerService                           u:object_r:system_service:s0
 iccc                                        u:object_r:system_service:s0
 moodlight                                   u:object_r:system_service:s0
 injection                                   u:object_r:system_service:s0

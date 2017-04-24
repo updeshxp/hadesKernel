@@ -631,18 +631,6 @@ case "$target" in
 				echo "0" > /sys/module/lowmemorykiller/parameters/debug_level
 				fi
 
-				# Permissive
-				setenforce 0
-
-				# Init.d support
-				mount -o remount,rw /system
-				if [ ! -d /system/etc/init.d ]; then
-				mkdir /system/etc/init.d
-				fi
-				chmod 777 /system/etc/init.d/*
-				busybox run-parts /system/etc/init.d
-				mount -o remount,ro /system
-
                 # Bring up all cores online
                 echo 1 > /sys/devices/system/cpu/cpu1/online
                 echo 1 > /sys/devices/system/cpu/cpu2/online
