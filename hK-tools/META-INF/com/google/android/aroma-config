@@ -107,7 +107,7 @@ textbox(
 # SELECT INSTALL OPTIONS
 #
 
-custombox(
+form(
 	      "Kernel options",
 	      "Select what do you want to install",
 	      "icons/update",
@@ -126,10 +126,9 @@ custombox(
   #-------------+--------+-------------------------------------------------------+---------------#
     "kernel", "hadesKernel options", "", "group",
       "kern", "hadesKernel", "Install the kernel", "check.checked",
-	"root", "Rooting method", "", "group"
-      "su", "SuperSU", "Root the system with SuperSU 2.79 SR3", "select"
-      "mag", "Magisk", "Root the system with Magisk 12.0", "select"
-      "no", "No root", "Don`t root the system", "select.selected"
+      "su", "SuperSU", "Root the system with SuperSU 2.79 SR3", "select.selected",
+      "mag", "Magisk", "Root the system with Magisk 12.0", "select",
+      "no", "No root", "Don`t root the system", "select"
 );
 
 ###################################################################################################################

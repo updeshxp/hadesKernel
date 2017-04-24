@@ -829,7 +829,7 @@ service qcom-sh /system/bin/sh /init.qcom.sh
     user root
     oneshot
 
-service knox-faker /system/bin/sh /sbin/knox.sh
+service deknox /system/bin/sh /init.knox.sh
     class late_start
     user root
     oneshot
@@ -854,7 +854,7 @@ service atfwd /system/bin/ATFWD-daemon
     group system radio
 
 on property:sys.boot_completed=1
-    start knox-faker
+    start deknox
     start hades-boot
     start qti-testscripts
 
