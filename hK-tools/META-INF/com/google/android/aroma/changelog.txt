@@ -1,3 +1,24 @@
+<b><#selectbg_g>v2.4 - 24.04.2017</#></b>
+<*>updated ramdisk to latest official fw</*>
+<*>added root options in Aroma</*>
+<*>reworked knox 0x0 script</*>
+<*>revert update to linux 3.10.60 for now</*>
+<*>revert add more governors for now</*>
+<*>revert add hotplugs for now</*>
+<*>revert add i/o schedulers for now</*>
+
+<b><#selectbg_g>v2.3 - 05.04.2017</#></b>
+<*>fixed camera focus for J series</*>
+<*>updated to linux 3.10.60</*>
+<*>added more governors (alucard/lionfish/barry_allen/intelliactive - these can be unstable - use interactive if you have issues)</*>
+<*>added hotplugs (intelliplug/bricked hotplug/alucard/msm_hotplug)</*>
+<*>added i/o schedulers (vr/fiops/sioplus/zen) and set FIOPS as default</*>
+<*>knox 0x0 - borrowed some things from magisk (:</*>
+<*>updated powersuspend</*>
+<*>ramdisk tune-ups</*>
+<*>cpufreq tune-ups</*>
+<*>memory/cache tune-ups</*>
+
 <b><#selectbg_g>v2.2 - 20.02.2017</#></b>
 <*>add support for J5 2015 (J500xx)</*>
 <*>add usb fast charge</*>

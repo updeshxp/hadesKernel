@@ -20,13 +20,22 @@ show_progress(0.4, "-900");
 	  run_program("/tmp/hades/modules.sh");
     endif;
 
-	# SuperSU
-    if
-      file_getprop("/tmp/aroma/hades.prop","su") == "1"
+	# Root
+    if file_getprop("/tmp/aroma/hades.prop","su") == "1"
     then
-      ui_print("@  Rooting the system");
+      ui_print("@  Rooting with SuperSU");
 	  set_perm(0, 0, 0777, "/tmp/hades/supersu.sh");
-	  run_program("/tmp/hades/supersu.sh", "3", "0", "/tmp/hades/SuperSU.zip");
+	  run_program("/tmp/hades/supersu.sh", "3", "0", "/tmp/hades/supersu.zip");
+    endif;
+    if file_getprop("/tmp/aroma/hades.prop","mag") == "1"
+    then
+      ui_print("@  Rooting with Magisk");
+	  set_perm(0, 0, 0777, "/tmp/hades/magisk.sh");
+	  run_program("/tmp/hades/magisk.sh", "3", "0", "/tmp/hades/magisk.zip");
+    endif;
+    if file_getprop("/tmp/aroma/hades.prop","no") == "1"
+    then
+      ui_print("@  Leaving the system unrooted");
     endif;
 set_progress(0.98);
 delete_recursive("/tmp");
