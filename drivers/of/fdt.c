@@ -19,9 +19,6 @@
 #include <linux/string.h>
 #include <linux/errno.h>
 #include <linux/slab.h>
-#include <linux/libfdt.h>
-#include <linux/debugfs.h>
-#include <linux/serial_core.h>
 #include <linux/cmdline_helper.h>
 
 #include <asm/setup.h>  /* for COMMAND_LINE_SIZE */
