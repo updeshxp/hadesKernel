@@ -26,18 +26,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# Permissive
-setenforce 0
-
-# Init.d support
-mount -o remount,rw /system
-if [ ! -d /system/etc/init.d ]; then
-mkdir /system/etc/init.d
-fi
-chmod 777 /system/etc/init.d/*
-busybox run-parts /system/etc/init.d
-mount -o remount,ro /system
-
 # Fix some security flags / knox 0x0
 /sbin/resetprop -v -n ro.boot.warranty_bit 0
 /sbin/resetprop -v -n ro.warranty_bit 0
