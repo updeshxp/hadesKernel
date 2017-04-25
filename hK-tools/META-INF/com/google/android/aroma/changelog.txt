@@ -3,6 +3,9 @@
 <*>added root options in Aroma</*>
 <*>added Magisk as root option</*>
 <*>removed charging limit for some devices</*>
+<*>disabled modules unload</*>
+<*>reworked modules implementation, 
+*now you can switch to any other kernel without wifi or FM Radio issues</*>
 <*>reworked knox 0x0 script</*>
 <*>revert update to linux 3.10.60 for now</*>
 <*>revert add more governors for now</*>

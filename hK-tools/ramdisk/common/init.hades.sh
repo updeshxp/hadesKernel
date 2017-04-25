@@ -640,6 +640,9 @@ case "$target" in
 				busybox run-parts /system/etc/init.d
 				mount -o remount,ro /system
 
+				insmod /hmod/wlan.ko
+				insmod /hmod/radio.ko
+
                 # Bring up all cores online
                 echo 1 > /sys/devices/system/cpu/cpu1/online
                 echo 1 > /sys/devices/system/cpu/cpu2/online
