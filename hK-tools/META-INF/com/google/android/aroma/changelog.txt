@@ -1,4 +1,5 @@
 <b><#selectbg_g>v2.4 - 24.04.2017</#></b>
+<*>kernel built permissive to avoid some issues</*>
 <*>updated ramdisk to latest official fw</*>
 <*>added root options in Aroma</*>
 <*>added Magisk as root option</*>
