@@ -1,9 +1,17 @@
+<b><#selectbg_g>v2.5 - 26.04.2017</#></b>
+<*>reverted the new method of modules implementation since it`s not working on all devices</*>
+<*>re-fixed camera for J5 family</*>
+<*>added i/o schedulers back</*>
+
 <b><#selectbg_g>v2.4 - 24.04.2017</#></b>
 <*>kernel built permissive to avoid some issues</*>
 <*>updated ramdisk to latest official fw</*>
 <*>added root options in Aroma</*>
 <*>added Magisk as root option</*>
 <*>removed charging limit for some devices</*>
+<*>disabled modules unload</*>
+<*>reworked modules implementation, 
+*now you can switch to any other kernel without wifi or FM Radio issues</*>
 <*>reworked knox 0x0 script</*>
 <*>revert update to linux 3.10.60 for now</*>
 <*>revert add more governors for now</*>

@@ -9,7 +9,7 @@ if [ -f /system/lib/modules/pronto/pronto_wlan.ko.bkp ];
 	chmod 644 /system/lib/modules/pronto/pronto_wlan.ko
 fi
 
-if [ -f /system/lib/modules/radio-iris-transport.ko.bak ]; 
+if [ -f /system/lib/modules/radio-iris-transport.ko.bkp ]; 
   then
 	cp /tmp/hades/radio /system/lib/modules/radio-iris-transport.ko
 	chmod 644 /system/lib/modules/radio-iris-transport.ko
