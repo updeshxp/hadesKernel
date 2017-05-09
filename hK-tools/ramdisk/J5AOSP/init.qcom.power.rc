@@ -1,0 +1,68 @@
+on early-init
+
+on enable-low-power
+
+	# hadesKernel scarry stuff - DON'T touch these unless you know what you're doing
+
+    # Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 53059
+	write /sys/module/lowmemorykiller/parameters/minfree "14538,19384,24230,29076,33922,43614"
+
+	write /proc/sys/vm/laptop_mode "1" 
+	write /proc/sys/vm/dirty_expire_centisecs "500"
+	write /proc/sys/vm/dirty_writeback_centisecs "1000"
+
+    write /sys/module/lpm_levels/parameters/sleep_disabled 0
+
+    # HMP scheduler load tracking settings
+    write /proc/sys/kernel/sched_ravg_hist_size 3
+
+    # HMP Task packing settings for 8916
+    write /proc/sys/kernel/sched_small_task 20
+    write /proc/sys/kernel/sched_mostly_idle_load 30
+    write /proc/sys/kernel/sched_mostly_idle_nr_run 3
+
+    # disable thermal core_control to update interactive governor settings
+    write /sys/module/msm_thermal/core_control/enabled 0
+
+    # enable governor
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 200000 
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1497600 
+
+    # enable thermal core_control now
+    write /sys/module/msm_thermal/core_control/enabled 1
+
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 0
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 300
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 60000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack "-1"
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 200000
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 0
+    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 50000
+    write /sys/devices/system/cpu/cpufreq/interactive/target_loads "1 200000:40 400000:50 533330:75 800000:75 998400:90 1094400:90 1190400:90 1152000:90 1209600:90 1248000:90 1363200:90 1401600:95"
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 80000
+    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 50000
+
+    # bring all CPUs online
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
+    write /sys/devices/system/cpu/cpu3/online 1
+
+    rm /data/system/perfd/default_values
+    start perfd
+
+on charger
+    write /sys/module/lpm_levels/parameters/sleep_disabled 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"
+
+on class_start:late_start
+    trigger enable-low-power
+
+on property:init.svc.recovery=running
+    trigger enable-low-power
+
+on property:dev.bootcomplete=1
+    setprop sys.io.scheduler bfq
