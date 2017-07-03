@@ -7,10 +7,10 @@
 #The build 
 	export ARCH=arm
 	export CROSS_COMPILE=$(pwd)/hK-tools/arm-eabi-4.8/bin/arm-eabi-
-	mkdir -p output hK-out/pack/rd hK-out/zip/hades
+	mkdir -p output hK-out/pack/rd hK-out/zip/hades hK-zip
 
 	make -C $(pwd) O=output common_defconfig VARIANT_DEFCONFIG=a5fgm_defconfig SELINUX_DEFCONFIG=selinux_defconfig
-	make -j64 -C $(pwd) O=output
+	make -j128 -C $(pwd) O=output
 
 # zImage copying - assuming the zimage is built
 	cp output/arch/arm/boot/zImage $(pwd)/hK-out/pack/zImage
@@ -51,18 +51,18 @@ echo ""
 				--dt ./hK-out/pack/dts \
 				--output $(pwd)/hK-out/zip/boot.img
 
+echo -n "SEANDROIDENFORCE" >> $(pwd)/hK-out/zip/boot.img
+
 #Auto made zips for F only - now
 cp -r $(pwd)/hK-tools/META-INF $(pwd)/hK-out/zip/
 sed -i 's/A500xx/A500F/g' $(pwd)/hK-out/zip/META-INF/com/google/android/aroma-config
 cp -r $(pwd)/output/drivers/staging/prima/wlan.ko $(pwd)/hK-out/zip/hades/hades
+cp -r $(pwd)/output/drivers/media/radio/radio-iris-transport.ko $(pwd)/hK-out/zip/hades/radio
 cp -r $(pwd)/hK-tools/scripts/* $(pwd)/hK-out/zip/hades/
 cp -r $(pwd)/hK-tools/*SuperSU*.zip $(pwd)/hK-out/zip/hades/SuperSU.zip
 cd hK-out/zip
-zip -r -9 - * > ../"A500F_hadesKernel-$(cat ../../.scmversion).zip"
+zip -r -9 - * > ../../hK-zip/"A500F$(cat ../../.scmversion).zip"
 cd ../../
-
-echo "Done!"
-
 
 echo "Done!"
 
